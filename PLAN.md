@@ -1,5 +1,7 @@
 # bluegenes-go-concept-relation
 
+#### Show which genes are associated with each enriched GO term
+
 This visualization should only support `ids` for multiple genes.
 
 It should have a filter panel similar to the one in [bluegenes-GO-term-visualizer](https://github.com/intermine/bluegenes-GO-term-visualizer/blob/master/preview.png), except with only the *Ontology* filter, so it can probably be made more compact.
