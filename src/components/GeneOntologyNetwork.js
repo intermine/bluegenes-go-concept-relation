@@ -11,15 +11,16 @@ function GeneOntologyNetwork({ data }) {
 			elements.push({
 				group: 'nodes',
 				data: {
-					id: el.symbol
-					// parent: 'nparent'
+					id: el.symbol,
+					bg: '#808080'
 				}
 			});
 			el.goAnnotation.forEach(e => {
 				elements.push({
 					group: 'nodes',
 					data: {
-						id: e.ontologyTerm.identifier
+						id: e.ontologyTerm.identifier,
+						bg: '#F4D03F'
 					}
 				});
 				elements.push({
@@ -40,7 +41,14 @@ function GeneOntologyNetwork({ data }) {
 				{
 					selector: 'node',
 					style: {
-						label: 'data(id)'
+						label: 'data(id)',
+						'background-color': 'data(bg)'
+					}
+				},
+				{
+					selector: 'edge',
+					style: {
+						'line-color': '#ccc'
 					}
 				}
 			],
