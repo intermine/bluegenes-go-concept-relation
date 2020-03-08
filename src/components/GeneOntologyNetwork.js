@@ -54,13 +54,10 @@ function GeneOntologyNetwork({ data }) {
 			],
 			layout: {
 				name: 'cose-bilkent',
-				quality: 'default',
-				nodeDimensionsIncludeLabels: false,
+				quality: 'draft',
 				fit: true,
 				padding: 10,
-				nodeRepulsion: 4500,
-				idealEdgeLength: 100,
-				nestingFactor: 0.1
+				idealEdgeLength: 100
 			}
 		});
 	}, [data]);
