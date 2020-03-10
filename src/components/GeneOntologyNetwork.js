@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
 import cytoscape from 'cytoscape';
+import coseBilkent from 'cytoscape-cose-bilkent';
+
+cytoscape.use(coseBilkent);
 
 function GeneOntologyNetwork({ data }) {
 	useEffect(() => {
@@ -8,15 +11,16 @@ function GeneOntologyNetwork({ data }) {
 			elements.push({
 				group: 'nodes',
 				data: {
-					id: el.symbol
-					// parent: 'nparent'
+					id: el.symbol,
+					bg: '#808080'
 				}
 			});
 			el.goAnnotation.forEach(e => {
 				elements.push({
 					group: 'nodes',
 					data: {
-						id: e.ontologyTerm.identifier
+						id: e.ontologyTerm.identifier,
+						bg: '#F4D03F'
 					}
 				});
 				elements.push({
@@ -37,10 +41,24 @@ function GeneOntologyNetwork({ data }) {
 				{
 					selector: 'node',
 					style: {
-						label: 'data(id)'
+						label: 'data(id)',
+						'background-color': 'data(bg)'
+					}
+				},
+				{
+					selector: 'edge',
+					style: {
+						'line-color': '#ccc'
 					}
 				}
-			]
+			],
+			layout: {
+				name: 'cose-bilkent',
+				quality: 'draft',
+				fit: true,
+				padding: 10,
+				idealEdgeLength: 100
+			}
 		});
 	}, [data]);
 	return <div id="cy" style={{ height: 500 }}></div>;
