@@ -79,6 +79,18 @@ function GeneOntologyNetwork({ data }) {
 	function makePopper(ele) {
 		ele.tippy = tippy(document.createElement('div'), {
 			trigger: 'manual',
+			onCreate(instance) {
+				instance.setProps({
+					getReferenceClientRect: () => ({
+						width: 0,
+						height: 0,
+						top: event.clientY,
+						bottom: event.clientY,
+						left: event.clientX,
+						right: event.clientX
+					})
+				});
+			},
 			content: () => {
 				let content = document.createElement('div');
 				content.innerHTML = ele.id();
