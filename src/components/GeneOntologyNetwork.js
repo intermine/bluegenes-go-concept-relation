@@ -68,10 +68,22 @@ function GeneOntologyNetwork({ data }) {
 				makePopper(ele);
 			});
 		});
+		cy.elements().unbind('mouseover');
+		cy.elements().bind('mouseover', event => event.target.tippy.show());
+
+		cy.elements().unbind('mouseout');
+		cy.elements().bind('mouseout', event => event.target.tippy.hide());
 	}, [data]);
 
 	function makePopper(ele) {
-		ele.tippy = tippy(document.createElement('div'), {});
+		ele.tippy = tippy(document.createElement('div'), {
+			trigger: 'manual',
+			content: () => {
+				let content = document.createElement('div');
+				content.innerHTML = ele.id();
+				return content;
+			}
+		});
 	}
 	return <div id="cy" style={{ height: 500 }}></div>;
 }
