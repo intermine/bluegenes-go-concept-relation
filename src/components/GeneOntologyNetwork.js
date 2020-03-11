@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import cytoscape from 'cytoscape';
 import coseBilkent from 'cytoscape-cose-bilkent';
+import popper from 'cytoscape-popper';
+import tippy from 'tippy.js';
 
+cytoscape.use(popper);
 cytoscape.use(coseBilkent);
 
 function GeneOntologyNetwork({ data }) {
@@ -33,7 +36,7 @@ function GeneOntologyNetwork({ data }) {
 			});
 		});
 
-		cytoscape({
+		let cy = (window.cy = cytoscape({
 			container: document.getElementById('cy'),
 			elements: elements,
 			grabbable: true,
@@ -59,8 +62,17 @@ function GeneOntologyNetwork({ data }) {
 				padding: 10,
 				idealEdgeLength: 100
 			}
+		}));
+		cy.ready(() => {
+			cy.elements().forEach(ele => {
+				makePopper(ele);
+			});
 		});
 	}, [data]);
+
+	function makePopper(ele) {
+		ele.tippy = tippy(document.createElement('div'), {});
+	}
 	return <div id="cy" style={{ height: 500 }}></div>;
 }
 
