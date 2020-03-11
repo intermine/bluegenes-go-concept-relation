@@ -63,16 +63,17 @@ function GeneOntologyNetwork({ data }) {
 				idealEdgeLength: 100
 			}
 		}));
+		let node = cy.elements().nodes();
 		cy.ready(() => {
-			cy.elements().forEach(ele => {
+			node.forEach(ele => {
 				makePopper(ele);
 			});
 		});
-		cy.elements().unbind('mouseover');
-		cy.elements().bind('mouseover', event => event.target.tippy.show());
+		node.unbind('mouseover');
+		node.bind('mouseover', event => event.target.tippy.show());
 
-		cy.elements().unbind('mouseout');
-		cy.elements().bind('mouseout', event => event.target.tippy.hide());
+		node.unbind('mouseout');
+		node.bind('mouseout', event => event.target.tippy.hide());
 	}, [data]);
 
 	function makePopper(ele) {
