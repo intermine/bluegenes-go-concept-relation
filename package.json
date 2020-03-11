@@ -4,6 +4,10 @@
   "main": "src/index.js",
   "description": "",
   "homepage": "http://www.intermine.org",
+  "repository": {
+   "type": "git",
+   "url": "https://github.com/intermine/bluegenes-go-concept-relation"
+  },
   "scripts": {
     "test": "jest",
     "build": "./node_modules/.bin/webpack",
