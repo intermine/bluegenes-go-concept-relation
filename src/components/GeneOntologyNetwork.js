@@ -119,6 +119,7 @@ function GeneOntologyNetwork({ data }) {
 				event.target.style('backgroundColor', '#EDBE05');
 				content = `
 					<div>
+						<span>Symbol: </span><strong>${event.target[0]._private.data.id}</strong><br/><div style="padding: 4px"></div>
 						<span>Name: </span><strong>${info.name}</strong><br/><div style="padding: 4px"></div>
 						<span>NameSpace: </span><strong>${info.namespace}</strong><br/><div style="padding: 4px"></div>
 						<span>Description: </span><strong>${info.description}</strong>
