@@ -11,19 +11,34 @@ function GeneOntologyNetwork({ data }) {
 	useEffect(() => {
 		const elements = [];
 		data.forEach(el => {
+			const { symbol, secondaryIdentifier, primaryIdentifier, organism } = el;
 			elements.push({
 				group: 'nodes',
 				data: {
 					id: el.symbol,
-					bg: '#808080'
+					bg: '#808080',
+					info: {
+						class: el.class,
+						symbol,
+						shortName: organism.shortName,
+						primaryIdentifier,
+						secondaryIdentifier
+					}
 				}
 			});
 			el.goAnnotation.forEach(e => {
+				const { description, name, namespace } = e.ontologyTerm;
 				elements.push({
 					group: 'nodes',
 					data: {
 						id: e.ontologyTerm.identifier,
-						bg: '#F4D03F'
+						bg: '#F4D03F',
+						info: {
+							class: e.class,
+							name,
+							namespace,
+							description
+						}
 					}
 				});
 				elements.push({
@@ -93,7 +108,22 @@ function GeneOntologyNetwork({ data }) {
 			},
 			content: () => {
 				let content = document.createElement('div');
-				content.innerHTML = ele.id();
+				let { info } = ele.data();
+				if (info.class === 'Gene') {
+					content.innerHTML = `
+						<strong>Symbol: </strong>${info.symbol}<br/>
+						<strong>Name: </strong>${info.shortName}<br/>
+						<strong>Primary Identifier: </strong>${info.primaryIdentifier}<br/>
+						<strong>Secondary Identifier: </strong>${info.secondaryIdentifier}
+					`;
+				}
+				if (info.class === 'GOAnnotation') {
+					content.innerHTML = `
+						<strong>Name: </strong>${info.name}<br/>
+						<strong>NameSpace: </strong>${info.namespace}<br/>
+						<strong>Description: </strong>${info.description}
+					`;
+				}
 				return content;
 			}
 		});

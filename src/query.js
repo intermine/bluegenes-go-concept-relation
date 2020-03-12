@@ -11,7 +11,8 @@ const query = geneId => ({
 		'goAnnotation.evidence.code.code',
 		'goAnnotation.ontologyTerm.identifier',
 		'goAnnotation.ontologyTerm.name',
-		'goAnnotation.ontologyTerm.namespace'
+		'goAnnotation.ontologyTerm.namespace',
+		'goAnnotation.ontologyTerm.description'
 	],
 	orderBy: [
 		{
