@@ -14,7 +14,7 @@ const RootContainer = ({ serviceUrl }) => {
 	}, []);
 
 	return (
-		<div className="rootContainer">
+		<div className="rootContainer" style={{ position: 'relative' }}>
 			{data.length ? <GeneOntologyNetwork data={data} /> : <h1>Loading...</h1>}
 		</div>
 	);

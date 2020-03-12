@@ -1,11 +1,28 @@
 import React, { useEffect } from 'react';
 import cytoscape from 'cytoscape';
 import coseBilkent from 'cytoscape-cose-bilkent';
-import popper from 'cytoscape-popper';
-import tippy from 'tippy.js';
 
-cytoscape.use(popper);
 cytoscape.use(coseBilkent);
+
+function createTooltip(position, content) {
+	const div = document.createElement('div');
+	const rootElem = document.getElementsByClassName('rootContainer')[0];
+	if (rootElem.offsetWidth - position.x > 300) position.x += 50;
+	else position.x -= 350;
+	div.style.background = 'gray';
+	div.style.position = 'absolute';
+	div.style.color = 'white';
+	div.innerHTML = content;
+	div.style.top = position.y + 'px';
+	div.style.fontFamily = 'arial';
+	div.style.left = position.x + 'px';
+	div.style.padding = '10px';
+	div.style.width = '310px';
+	div.style.border = '1px solid black';
+	div.style.borderRadius = '8px';
+	document.body.append(div);
+	return div;
+}
 
 function GeneOntologyNetwork({ data }) {
 	useEffect(() => {
@@ -51,7 +68,7 @@ function GeneOntologyNetwork({ data }) {
 			});
 		});
 
-		let cy = (window.cy = cytoscape({
+		let cy = cytoscape({
 			container: document.getElementById('cy'),
 			elements: elements,
 			grabbable: true,
@@ -77,58 +94,55 @@ function GeneOntologyNetwork({ data }) {
 				padding: 10,
 				idealEdgeLength: 100
 			}
-		}));
-		let node = cy.elements().nodes();
-		cy.ready(() => {
-			node.forEach(ele => {
-				makePopper(ele);
-			});
 		});
+		let div;
+		let node = cy.elements().nodes();
 		node.unbind('mouseover');
-		node.bind('mouseover', event => event.target.tippy.show());
+		node.bind('mouseover', event => {
+			const {
+				data: { info }
+			} = event.target[0]._private;
+			let content;
+			document.body.style.cursor = 'pointer';
+			if (info.class === 'Gene') {
+				event.target.style('backgroundColor', '#666666');
+				content = `
+					<div>
+						<span>Symbol: </span><strong>${info.symbol}</strong><br/><div style="padding: 2px"></div>
+						<span>Name: </span><strong>${info.shortName}</strong><br/><div style="padding: 2px"></div>
+						<span>Primary Identifier: </span><strong>${info.primaryIdentifier}</strong><br/><div style="padding: 2px"></div>
+						<span>Secondary Identifier: </span><strong>${info.secondaryIdentifier}</strong>
+					</div>
+				`;
+			}
+			if (info.class === 'GOAnnotation') {
+				event.target.style('backgroundColor', '#EDBE05');
+				content = `
+					<div>
+						<span>Name: </span><strong>${info.name}</strong><br/><div style="padding: 4px"></div>
+						<span>NameSpace: </span><strong>${info.namespace}</strong><br/><div style="padding: 4px"></div>
+						<span>Description: </span><strong>${info.description}</strong>
+					</div>
+				`;
+			}
+
+			div = createTooltip(event.renderedPosition, content);
+		});
 
 		node.unbind('mouseout');
-		node.bind('mouseout', event => event.target.tippy.hide());
-	}, [data]);
-
-	function makePopper(ele) {
-		ele.tippy = tippy(document.createElement('div'), {
-			trigger: 'manual',
-			onCreate(instance) {
-				instance.setProps({
-					getReferenceClientRect: () => ({
-						width: 0,
-						height: 0,
-						top: event.clientY,
-						bottom: event.clientY,
-						left: event.clientX,
-						right: event.clientX
-					})
-				});
-			},
-			content: () => {
-				let content = document.createElement('div');
-				let { info } = ele.data();
-				if (info.class === 'Gene') {
-					content.innerHTML = `
-						<strong>Symbol: </strong>${info.symbol}<br/>
-						<strong>Name: </strong>${info.shortName}<br/>
-						<strong>Primary Identifier: </strong>${info.primaryIdentifier}<br/>
-						<strong>Secondary Identifier: </strong>${info.secondaryIdentifier}
-					`;
-				}
-				if (info.class === 'GOAnnotation') {
-					content.innerHTML = `
-						<strong>Name: </strong>${info.name}<br/>
-						<strong>NameSpace: </strong>${info.namespace}<br/>
-						<strong>Description: </strong>${info.description}
-					`;
-				}
-				return content;
-			}
+		node.bind('mouseout', event => {
+			document.body.style.cursor = 'default';
+			const {
+				data: { info }
+			} = event.target[0]._private;
+			div.style.display = 'none';
+			if (info.class === 'Gene')
+				event.target.style('backgroundColor', '#808080');
+			if (info.class === 'GOAnnotation')
+				event.target.style('backgroundColor', '#F4D03F');
 		});
-	}
-	return <div id="cy" style={{ height: 500 }}></div>;
+	}, [data]);
+	return <div id="cy" style={{ height: 500, position: 'relative' }}></div>;
 }
 
 export default GeneOntologyNetwork;
