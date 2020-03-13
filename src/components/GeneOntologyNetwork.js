@@ -28,7 +28,7 @@ function GeneOntologyNetwork({ data }) {
 			changeNodeColor(event);
 		});
 	}, [data]);
-	return <div id="cy" style={{ height: 500, position: 'relative' }}></div>;
+	return <div id="cy" className="cyContainer"></div>;
 }
 
 export default GeneOntologyNetwork;
