@@ -1,67 +1,34 @@
 import React, { useEffect } from 'react';
 import cytoscape from 'cytoscape';
 import coseBilkent from 'cytoscape-cose-bilkent';
+import {
+	createTooltip,
+	createTooltipData,
+	getGraphData,
+	changeNodeColor,
+	createCytoscapeConfig
+} from '../utils';
 
 cytoscape.use(coseBilkent);
 
 function GeneOntologyNetwork({ data }) {
 	useEffect(() => {
-		const elements = [];
-		data.forEach(el => {
-			elements.push({
-				group: 'nodes',
-				data: {
-					id: el.symbol,
-					bg: '#808080'
-				}
-			});
-			el.goAnnotation.forEach(e => {
-				elements.push({
-					group: 'nodes',
-					data: {
-						id: e.ontologyTerm.identifier,
-						bg: '#F4D03F'
-					}
-				});
-				elements.push({
-					group: 'edges',
-					data: {
-						target: el.symbol,
-						source: e.ontologyTerm.identifier
-					}
-				});
-			});
+		let cy = cytoscape(createCytoscapeConfig(getGraphData(data)));
+		let div;
+		let node = cy.elements().nodes();
+		node.unbind('mouseover');
+		node.bind('mouseover', event => {
+			document.body.style.cursor = 'pointer';
+			div = createTooltip(event.renderedPosition, createTooltipData(event));
 		});
-
-		cytoscape({
-			container: document.getElementById('cy'),
-			elements: elements,
-			grabbable: true,
-			style: [
-				{
-					selector: 'node',
-					style: {
-						label: 'data(id)',
-						'background-color': 'data(bg)'
-					}
-				},
-				{
-					selector: 'edge',
-					style: {
-						'line-color': '#ccc'
-					}
-				}
-			],
-			layout: {
-				name: 'cose-bilkent',
-				quality: 'draft',
-				fit: true,
-				padding: 10,
-				idealEdgeLength: 100
-			}
+		node.unbind('mouseout');
+		node.bind('mouseout', event => {
+			document.body.style.cursor = 'default';
+			div.style.display = 'none';
+			changeNodeColor(event);
 		});
 	}, [data]);
-	return <div id="cy" style={{ height: 500 }}></div>;
+	return <div id="cy" className="cyContainer"></div>;
 }
 
 export default GeneOntologyNetwork;
