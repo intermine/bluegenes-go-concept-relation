@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { queryData } from './query';
 import GeneOntologyNetwork from './components/GeneOntologyNetwork';
+import Controls from './components/controls';
 
 const RootContainer = ({ serviceUrl }) => {
 	const [data, setData] = useState([]);
@@ -15,7 +16,19 @@ const RootContainer = ({ serviceUrl }) => {
 
 	return (
 		<div className="rootContainer">
-			{data.length ? <GeneOntologyNetwork data={data} /> : <h1>Loading...</h1>}
+			{data.length ? (
+				<div className="innerContainer">
+					<div className="graph">
+						<span className="chart-title">Go Concept Relation</span>
+						<GeneOntologyNetwork data={data} />
+					</div>
+					<div className="controls">
+						<Controls />
+					</div>
+				</div>
+			) : (
+				<h1>Loading...</h1>
+			)}
 		</div>
 	);
 };

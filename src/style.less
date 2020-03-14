@@ -10,13 +10,74 @@
 
 
   // this is just an example class for root div element, you may modify or delete it as per your usecase
-	.rootContainer {
+ 	.rootContainer {
 		border: 1px solid black;
 		padding: 20px;
-		position: relative;
-		.cyContainer {
-			position: relative !important;
-			height: 500px !important;
+
+		.innerContainer {
+		display: flex;
+		
+			.controls {
+			width: 15rem;
+
+				.filter-panel-root {
+					padding: 10px 0px;
+					border: 0.5px solid black;
+					border-radius: 10px;
+					background: #F9F9F9;
+					margin-bottom: 26px;
+			
+					h4.filter-panel-title {
+						font-size: 22px;
+						font-family: sans-serif;
+						text-align: center;
+						margin: 0;
+						margin-bottom: 10px;
+						font-weight: 300;
+					}
+				
+					.filter-panel {
+						// display: flex;
+						// justify-content: space-evenly;
+						.filter-container {
+							padding: 8px;
+							input {
+								margin-right: 10px;
+								font-size: 18px;
+							}
+							.nextLine {
+								padding: 5px;
+							}
+							label {
+								font-weight: 300;
+								margin: 6px 0;
+								font-size: 18px;
+								font-family: arial;
+								color: black;
+								text-align: center;
+							}
+						}
+					}
+				}
+			}
+
+			.graph {
+				width: calc(100vw - 15rem);
+
+				.chart-title {
+					font-weight: 300;
+					font-size: 24px;
+					font-family: sans-serif;
+					display: flex;
+					justify-content: center;
+					margin: 12px;
+				}
+					
+				.cyContainer {
+					position: relative !important;
+					height: 500px !important;
+				}
+			}
 		}
-  	}
+	}
 }
