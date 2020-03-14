@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { queryData } from './query';
 import GeneOntologyNetwork from './components/GeneOntologyNetwork';
-import Controls from './components/controls';
+import Controls from './components/Controls';
+import Loading from './components/Loading';
 
 const RootContainer = ({ serviceUrl }) => {
 	const [data, setData] = useState([]);
@@ -28,7 +29,7 @@ const RootContainer = ({ serviceUrl }) => {
 	return (
 		<div className="rootContainer">
 			{loading ? (
-				<h1>Loading...</h1>
+				<Loading />
 			) : data.length ? (
 				<div className="innerContainer">
 					<div className="graph">
