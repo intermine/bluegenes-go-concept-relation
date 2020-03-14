@@ -6,15 +6,17 @@ import Controls from './components/controls';
 const RootContainer = ({ serviceUrl }) => {
 	const [data, setData] = useState([]);
 	const [selectedOntology, changeOntology] = useState('biological_process');
-
+	const [loading, setLoading] = useState(true);
 	useEffect(() => {
+		setLoading(true);
 		queryData({
 			serviceUrl: serviceUrl,
 			geneId: '1205472,128,2314',
 			ontology: selectedOntology
 		}).then(data => {
 			setData(data);
-			document.getElementById(selectedOntology).checked = true;
+			setLoading(false);
+			if (data.length) document.getElementById(selectedOntology).checked = true;
 		});
 	}, selectedOntology);
 
@@ -25,7 +27,9 @@ const RootContainer = ({ serviceUrl }) => {
 
 	return (
 		<div className="rootContainer">
-			{data.length ? (
+			{loading ? (
+				<h1>Loading...</h1>
+			) : data.length ? (
 				<div className="innerContainer">
 					<div className="graph">
 						<span className="chart-title">Go Concept Relation</span>
@@ -36,7 +40,7 @@ const RootContainer = ({ serviceUrl }) => {
 					</div>
 				</div>
 			) : (
-				<h1>Loading...</h1>
+				<h1>No Data Found</h1>
 			)}
 		</div>
 	);
