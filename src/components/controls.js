@@ -1,34 +1,28 @@
 import React from 'react';
 
 const FilterPanel = ({ updateFilters }) => {
+	const ontologyTerms = [
+		'biological_process',
+		'cellular_process',
+		'molecular_function'
+	];
 	return (
 		<div className="filter-panel-root">
 			<h4 className="filter-panel-title">Ontology Filter</h4>
 			<div className="filter-panel">
 				<div className="filter-container">
-					<input
-						type="radio"
-						id="biological_process"
-						value="biological_process"
-						onChange={updateFilters}
-					/>
-					<label htmlFor="biological_process">biological_process</label>
-					<div className="nextLine"></div>
-					<input
-						type="radio"
-						id="cellular_process"
-						value="cellular_process"
-						onChange={updateFilters}
-					/>
-					<label htmlFor="cellular_process">cellular_process</label>
-					<div className="nextLine"></div>
-					<input
-						type="radio"
-						id="molecular_function"
-						value="molecular_function"
-						onChange={updateFilters}
-					/>
-					<label htmlFor="molecular_function">molecular_function</label>
+					{ontologyTerms.map(term => (
+						<>
+							<input
+								type="radio"
+								id={term}
+								value={term}
+								onChange={updateFilters}
+							/>
+							<label htmlFor={term}>{term}</label>
+							<div className="nextLine"></div>
+						</>
+					))}
 				</div>
 			</div>
 		</div>
