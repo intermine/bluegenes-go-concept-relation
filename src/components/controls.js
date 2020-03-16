@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FilterPanel = ({ updateFilters }) => {
+const FilterPanel = ({ updateFilters, selectedOntology }) => {
 	const ontologyTerms = [
 		'biological_process',
 		'cellular_process',
@@ -18,6 +18,7 @@ const FilterPanel = ({ updateFilters }) => {
 								id={term}
 								value={term}
 								onChange={updateFilters}
+								checked={selectedOntology === term}
 							/>
 							<label htmlFor={term}>{term}</label>
 							<div className="nextLine"></div>

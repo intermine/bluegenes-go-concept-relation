@@ -8,6 +8,7 @@ const RootContainer = ({ serviceUrl }) => {
 	const [data, setData] = useState([]);
 	const [selectedOntology, changeOntology] = useState('biological_process');
 	const [loading, setLoading] = useState(true);
+
 	useEffect(() => {
 		setLoading(true);
 		queryData({
@@ -17,14 +18,8 @@ const RootContainer = ({ serviceUrl }) => {
 		}).then(data => {
 			setData(data);
 			setLoading(false);
-			if (data.length) document.getElementById(selectedOntology).checked = true;
 		});
 	}, selectedOntology);
-
-	function updateFilters(ev) {
-		document.getElementById(selectedOntology).checked = false;
-		changeOntology(ev.target.value);
-	}
 
 	return (
 		<div className="rootContainer">
@@ -37,7 +32,10 @@ const RootContainer = ({ serviceUrl }) => {
 						<GeneOntologyNetwork data={data} />
 					</div>
 					<div className="controls">
-						<Controls updateFilters={updateFilters} />
+						<Controls
+							updateFilters={ev => changeOntology(ev.target.value)}
+							selectedOntology={selectedOntology}
+						/>
 					</div>
 				</div>
 			) : (
