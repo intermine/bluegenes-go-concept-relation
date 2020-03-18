@@ -61,13 +61,17 @@ const RootContainer = ({ serviceUrl }) => {
 							data={selectedOntologyData[selectedOntology]}
 						/>
 					</div>
-					<div className="controls">
-						<Controls
-							updateFilters={ev => changeOntology(ev.target.value)}
-							selectedOntology={selectedOntology}
-							ontologyList={ontologyList}
-						/>
-					</div>
+					{ontologyList.length ? (
+						<div className="controls">
+							<Controls
+								updateFilters={ev => changeOntology(ev.target.value)}
+								selectedOntology={selectedOntology}
+								ontologyList={ontologyList}
+							/>
+						</div>
+					) : (
+						<></>
+					)}
 				</div>
 			) : (
 				<h1>No Data Found</h1>
