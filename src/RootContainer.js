@@ -6,20 +6,31 @@ import Loading from './components/Loading';
 
 const RootContainer = ({ serviceUrl }) => {
 	const [data, setData] = useState([]);
-	const [selectedOntology, changeOntology] = useState('biological_process');
+	const [ontologyList, setOntologyList] = useState([]);
+	const [selectedOntology, changeOntology] = useState('');
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		setLoading(true);
 		queryData({
 			serviceUrl: serviceUrl,
-			geneId: '1205472,128,2314',
-			ontology: selectedOntology
+			geneId: '1205472,128,2314'
 		}).then(data => {
 			setData(data);
 			setLoading(false);
 		});
-	}, selectedOntology);
+	}, []);
+
+	useEffect(() => {
+		const list = [];
+		data.forEach(d =>
+			d.goAnnotation.forEach(g => {
+				list.push(g.ontologyTerm.namespace);
+			})
+		);
+		setOntologyList([...new Set(list)]);
+		changeOntology(ontologyList.length && ontologyList[0]);
+	}, [data]);
 
 	return (
 		<div className="rootContainer">
@@ -35,6 +46,7 @@ const RootContainer = ({ serviceUrl }) => {
 						<Controls
 							updateFilters={ev => changeOntology(ev.target.value)}
 							selectedOntology={selectedOntology}
+							ontologyList={ontologyList}
 						/>
 					</div>
 				</div>

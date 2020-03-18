@@ -1,17 +1,12 @@
 import React from 'react';
 
-const FilterPanel = ({ updateFilters, selectedOntology }) => {
-	const ontologyTerms = [
-		'biological_process',
-		'cellular_process',
-		'molecular_function'
-	];
+const FilterPanel = ({ updateFilters, selectedOntology, ontologyList }) => {
 	return (
 		<div className="filter-panel-root">
-			<h4 className="filter-panel-title">Ontology Filter</h4>
+			<h4 className="filter-panel-title">Available Ontologies</h4>
 			<div className="filter-panel">
 				<div className="filter-container">
-					{ontologyTerms.map(term => (
+					{ontologyList.map(term => (
 						<>
 							<input
 								type="radio"
