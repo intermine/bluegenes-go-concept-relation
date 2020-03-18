@@ -1,4 +1,4 @@
-const query = (geneId, ontology) => ({
+const query = geneId => ({
 	constraintLogic: 'B and C and E and A and D',
 	from: 'Gene',
 	select: [
@@ -46,23 +46,17 @@ const query = (geneId, ontology) => ({
 			op: 'ONE OF',
 			values: ['EXP', 'IDA', 'IPI', 'IMP', 'IGI', 'IEP', 'TAS', 'IC'],
 			code: 'E'
-		},
-		{
-			path: 'goAnnotation.ontologyTerm.namespace',
-			op: '=',
-			value: ontology,
-			code: 'D'
 		}
 	]
 });
 
-const queryData = ({ geneId, serviceUrl, ontology, imjsClient = imjs }) => {
+const queryData = ({ geneId, serviceUrl, imjsClient = imjs }) => {
 	const service = new imjsClient.Service({
 		root: serviceUrl
 	});
 	return new Promise((resolve, reject) => {
 		service
-			.records(query(geneId, ontology))
+			.records(query(geneId))
 			.then(res => {
 				// if (res.length === 0) reject('No data found!');
 				resolve(res);
