@@ -8,6 +8,7 @@ const RootContainer = ({ serviceUrl }) => {
 	const [data, setData] = useState([]);
 	const [ontologyList, setOntologyList] = useState([]);
 	const [selectedOntology, changeOntology] = useState('');
+	const [selectedOntologyData, setOntologyData] = useState({});
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
@@ -29,18 +30,36 @@ const RootContainer = ({ serviceUrl }) => {
 			})
 		);
 		setOntologyList([...new Set(list)]);
-		changeOntology(ontologyList.length && ontologyList[0]);
 	}, [data]);
+
+	useEffect(() => {
+		const filteredMap = ontologyList.reduce(
+			(curMap, ontology) => (
+				(curMap[ontology] = data.map(item => ({
+					...item,
+					goAnnotation: item.goAnnotation.filter(
+						g => g.ontologyTerm.namespace === ontology
+					)
+				}))),
+				curMap
+			),
+			{}
+		);
+		setOntologyData(filteredMap);
+		changeOntology(ontologyList.length && ontologyList[0]);
+	}, [ontologyList]);
 
 	return (
 		<div className="rootContainer">
 			{loading ? (
 				<Loading />
-			) : data.length ? (
+			) : Object.keys(selectedOntologyData).length ? (
 				<div className="innerContainer">
 					<div className="graph">
 						<span className="chart-title">Go Concept Relation</span>
-						<GeneOntologyNetwork data={data} />
+						<GeneOntologyNetwork
+							data={selectedOntologyData[selectedOntology]}
+						/>
 					</div>
 					<div className="controls">
 						<Controls

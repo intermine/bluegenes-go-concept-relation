@@ -16,7 +16,10 @@
     "prettier"
   ],
   "parserOptions": {
-    "sourceType": "module"
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
   },
 	"rules": {
     "indent": ["error", "tab"],
