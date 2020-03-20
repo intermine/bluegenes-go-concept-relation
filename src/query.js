@@ -1,5 +1,5 @@
 const query = geneId => ({
-	constraintLogic: 'B and C and E and A and D',
+	constraintLogic: 'B and C and E and A',
 	from: 'Gene',
 	select: [
 		'id',

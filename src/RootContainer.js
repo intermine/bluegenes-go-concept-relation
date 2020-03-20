@@ -23,26 +23,26 @@ const RootContainer = ({ serviceUrl }) => {
 	}, []);
 
 	useEffect(() => {
-		const list = [];
+		const uniqueOntologies = new Set();
 		data.forEach(d =>
 			d.goAnnotation.forEach(g => {
-				list.push(g.ontologyTerm.namespace);
+				uniqueOntologies.add(g.ontologyTerm.namespace);
 			})
 		);
-		setOntologyList([...new Set(list)]);
+		setOntologyList([...uniqueOntologies]);
 	}, [data]);
 
 	useEffect(() => {
 		const filteredMap = ontologyList.reduce(
-			(curMap, ontology) => (
-				(curMap[ontology] = data.map(item => ({
+			(curMap, ontology) => ({
+				...curMap,
+				[ontology]: data.map(item => ({
 					...item,
 					goAnnotation: item.goAnnotation.filter(
 						g => g.ontologyTerm.namespace === ontology
 					)
-				}))),
-				curMap
-			),
+				}))
+			}),
 			{}
 		);
 		setOntologyData(filteredMap);
