@@ -21,29 +21,30 @@ function getGraphData(data) {
 				}
 			}
 		});
-		el.goAnnotation.forEach(e => {
-			const { description, name, namespace } = e.ontologyTerm;
-			elements.push({
-				group: 'nodes',
-				data: {
-					id: e.ontologyTerm.identifier,
-					bg: goTermColor,
-					info: {
-						class: e.class,
-						name,
-						namespace,
-						description
+		el.goAnnotation &&
+			el.goAnnotation.forEach(e => {
+				const { description, name, namespace } = e.ontologyTerm;
+				elements.push({
+					group: 'nodes',
+					data: {
+						id: e.ontologyTerm.identifier,
+						bg: goTermColor,
+						info: {
+							class: e.class,
+							name,
+							namespace,
+							description
+						}
 					}
-				}
+				});
+				elements.push({
+					group: 'edges',
+					data: {
+						target: el.symbol,
+						source: e.ontologyTerm.identifier
+					}
+				});
 			});
-			elements.push({
-				group: 'edges',
-				data: {
-					target: el.symbol,
-					source: e.ontologyTerm.identifier
-				}
-			});
-		});
 	});
 	return elements;
 }

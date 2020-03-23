@@ -13,7 +13,7 @@ cytoscape.use(coseBilkent);
 
 function GeneOntologyNetwork({ data }) {
 	useEffect(() => {
-		let cy = cytoscape(createCytoscapeConfig(getGraphData(data)));
+		let cy = cytoscape(createCytoscapeConfig(getGraphData(data || [])));
 		let div;
 		let node = cy.elements().nodes();
 		node.unbind('mouseover');
