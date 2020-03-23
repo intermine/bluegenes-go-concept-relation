@@ -1,5 +1,5 @@
 {
-  "accepts": ["id"]  ,
+  "accepts": ["ids"]  ,
   "classes":
     ["Gene"]
   ,

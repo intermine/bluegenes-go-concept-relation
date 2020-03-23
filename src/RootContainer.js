@@ -4,7 +4,7 @@ import GeneOntologyNetwork from './components/GeneOntologyNetwork';
 import Controls from './components/Controls';
 import Loading from './components/Loading';
 
-const RootContainer = ({ serviceUrl }) => {
+const RootContainer = ({ serviceUrl, entity }) => {
 	const [data, setData] = useState([]);
 	const [ontologyList, setOntologyList] = useState([]);
 	const [selectedOntology, changeOntology] = useState('');
@@ -15,7 +15,7 @@ const RootContainer = ({ serviceUrl }) => {
 		setLoading(true);
 		queryData({
 			serviceUrl: serviceUrl,
-			geneId: '1205472,128,2314'
+			geneId: entity.value
 		}).then(data => {
 			setData(data);
 			setLoading(false);
