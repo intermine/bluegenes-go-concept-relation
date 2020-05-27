@@ -13,11 +13,10 @@ const RootContainer = ({ serviceUrl, entity }) => {
 
 	useEffect(() => {
 		setLoading(true);
-		const { value } = entity;
-		const valueArr = typeof value === 'string' ? value.split() : value;
+		let { value } = entity;
 		queryData({
 			serviceUrl: serviceUrl,
-			geneId: valueArr
+			geneId: !Array.isArray(value) ? [value] : value
 		}).then(data => {
 			setData(data);
 			setLoading(false);
