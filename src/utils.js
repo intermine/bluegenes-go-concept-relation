@@ -1,17 +1,24 @@
-const geneColor = '#808080';
-const hoveredGeneColor = '#666666';
-const goTermColor = '#F4D03F';
-const hoveredGoTermColor = '#EDBE05';
+import colors from './constant';
 
 function getGraphData(data) {
 	const elements = [];
+	const colorArrLen = colors.length;
+	for (var i = 0; i < data.length; i++) {
+		data[i].color = colors[i % colorArrLen];
+	}
 	data.forEach(el => {
-		const { symbol, secondaryIdentifier, primaryIdentifier, organism } = el;
+		const {
+			symbol,
+			secondaryIdentifier,
+			primaryIdentifier,
+			organism,
+			color
+		} = el;
 		elements.push({
 			group: 'nodes',
 			data: {
 				id: el.symbol,
-				bg: geneColor,
+				bg: color,
 				shape: 'barrel',
 				info: {
 					class: el.class,
@@ -29,7 +36,7 @@ function getGraphData(data) {
 					group: 'nodes',
 					data: {
 						id: e.ontologyTerm.identifier,
-						bg: goTermColor,
+						bg: color,
 						shape: 'ellipse',
 						info: {
 							class: e.class,
@@ -108,7 +115,6 @@ function createTooltipData(node) {
 	} = node.target[0]._private;
 
 	if (info.class === 'Gene') {
-		node.target.style('backgroundColor', hoveredGeneColor);
 		return `
 			<div>
 				<span>Symbol: </span><strong>${info.symbol}</strong><br/><div style="padding: 2px"></div>
@@ -119,7 +125,6 @@ function createTooltipData(node) {
 		`;
 	}
 	if (info.class === 'GOAnnotation') {
-		node.target.style('backgroundColor', hoveredGoTermColor);
 		return `
 			<div>
 				<span>Symbol: </span><strong>${node.target[0]._private.data.id}</strong><br/><div style="padding: 4px"></div>
@@ -131,19 +136,9 @@ function createTooltipData(node) {
 	}
 }
 
-function changeNodeColor(node) {
-	const {
-		data: { info }
-	} = node.target[0]._private;
-	if (info.class === 'Gene') node.target.style('backgroundColor', geneColor);
-	if (info.class === 'GOAnnotation')
-		node.target.style('backgroundColor', goTermColor);
-}
-
 export {
 	createTooltip,
 	createTooltipData,
 	getGraphData,
-	changeNodeColor,
 	createCytoscapeConfig
 };
