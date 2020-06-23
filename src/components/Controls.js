@@ -7,7 +7,7 @@ const FilterPanel = ({ updateFilters, selectedOntology, ontologyList }) => {
 			<div className="filter-panel">
 				<div className="filter-container">
 					{ontologyList.map(term => (
-						<>
+						<React.Fragment key={term}>
 							<input
 								type="radio"
 								id={term}
@@ -17,7 +17,7 @@ const FilterPanel = ({ updateFilters, selectedOntology, ontologyList }) => {
 							/>
 							<label htmlFor={term}>{term}</label>
 							<div className="nextLine"></div>
-						</>
+						</React.Fragment>
 					))}
 				</div>
 			</div>
