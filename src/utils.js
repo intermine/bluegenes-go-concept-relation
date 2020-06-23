@@ -12,6 +12,7 @@ function getGraphData(data) {
 			data: {
 				id: el.symbol,
 				bg: geneColor,
+				shape: 'barrel',
 				info: {
 					class: el.class,
 					symbol,
@@ -29,6 +30,7 @@ function getGraphData(data) {
 					data: {
 						id: e.ontologyTerm.identifier,
 						bg: goTermColor,
+						shape: 'ellipse',
 						info: {
 							class: e.class,
 							name,
@@ -59,7 +61,8 @@ function createCytoscapeConfig(elements) {
 				selector: 'node',
 				style: {
 					label: 'data(id)',
-					'background-color': 'data(bg)'
+					'background-color': 'data(bg)',
+					shape: 'data(shape)'
 				}
 			},
 			{
