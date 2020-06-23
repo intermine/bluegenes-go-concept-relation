@@ -49,13 +49,15 @@
     		//in reality (outside the demo) this would be dynamic and not hard-coded
     		// to an ID.
     		dataToInitialiseToolWith = {
-    			class: 'Protein',
-    			format: 'ids',
-    			// right now this id corresponds to Human GATA1
-    			// this is a bit fragile since IDs change with every build
-    			// but we don't want to make the code more complicated than
-    			// needed for the demo.
-    			value: [128, 5468, 2314]
+          Gene: {
+            class: 'Gene',
+            format: 'ids',
+            // right now this id corresponds to Human GATA1
+            // this is a bit fragile since IDs change with every build
+            // but we don't want to make the code more complicated than
+            // needed for the demo.
+            value: [128, 5468, 2314]
+          }
     		},
     		toolState = {}, //to be confirmed how we use this.
         navigate = function(type, data, mine) {

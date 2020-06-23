@@ -35,10 +35,9 @@ const query = geneId => ({
 			code: 'C'
 		},
 		{
-			path: 'Gene',
-			op: 'LOOKUP',
-			value: geneId,
-			extraValue: 'H. sapiens',
+			path: 'Gene.id',
+			op: 'ONE OF',
+			values: geneId,
 			code: 'A'
 		},
 		{
