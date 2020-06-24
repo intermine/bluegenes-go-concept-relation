@@ -25,10 +25,13 @@ const RootContainer = ({ serviceUrl, entity }) => {
 
 	useEffect(() => {
 		const uniqueOntologies = new Set();
-		data.forEach(d =>
-			d.goAnnotation.forEach(g => {
-				uniqueOntologies.add(g.ontologyTerm.namespace);
-			})
+		data.forEach(
+			d =>
+				d &&
+				d.goAnnotation &&
+				d.goAnnotation.forEach(g => {
+					uniqueOntologies.add(g.ontologyTerm.namespace);
+				})
 		);
 		setOntologyList([...uniqueOntologies]);
 	}, [data]);
