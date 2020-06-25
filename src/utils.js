@@ -19,6 +19,7 @@ function getGraphData(data) {
 			data: {
 				id: el.symbol,
 				bg: color,
+				label: el.symbol,
 				shape: 'barrel',
 				info: {
 					class: el.class,
@@ -92,7 +93,7 @@ function createCytoscapeConfig(elements) {
 			{
 				selector: 'node',
 				style: {
-					label: 'data(id)',
+					label: 'data(label)',
 					'background-color': 'data(bg)',
 					shape: 'data(shape)'
 				}
