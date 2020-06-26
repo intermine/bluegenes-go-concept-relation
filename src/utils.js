@@ -3,6 +3,7 @@ import colors from './constant';
 function getGraphData(data) {
 	const elements = [];
 	const colorArrLen = colors.length;
+	// setting color of each gene node taking hex code color from constant file
 	for (var i = 0; i < data.length; i++) {
 		data[i].color = colors[i % colorArrLen];
 	}
@@ -61,6 +62,7 @@ function getGraphData(data) {
 }
 
 function makePie(elements) {
+	// creating array containting the colors each pie node needed
 	const idToColorsMap = elements.reduce((m, elem) => {
 		if (elem.data && elem.data.id) {
 			if (!m[elem.data.id]) m[elem.data.id] = [];
@@ -68,6 +70,7 @@ function makePie(elements) {
 		}
 		return m;
 	}, {});
+	// returning object containing all pie nodes with thier styles
 	return Object.keys(idToColorsMap)
 		.filter(key => idToColorsMap[key].length > 1)
 		.map(id => {

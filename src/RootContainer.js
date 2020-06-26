@@ -16,6 +16,7 @@ const RootContainer = ({ serviceUrl, entity }) => {
 		let { value } = entity;
 		queryData({
 			serviceUrl: serviceUrl,
+			// supporting single entity also by converting value into array and passing it to get queried
 			geneId: !Array.isArray(value) ? [value] : value
 		}).then(data => {
 			setData(data);
@@ -25,6 +26,7 @@ const RootContainer = ({ serviceUrl, entity }) => {
 
 	useEffect(() => {
 		const uniqueOntologies = new Set();
+		// extracting unique ontologies from the query response to show it for filtering
 		data.forEach(
 			d =>
 				d &&
@@ -37,6 +39,9 @@ const RootContainer = ({ serviceUrl, entity }) => {
 	}, [data]);
 
 	useEffect(() => {
+		// Formatting data according to the unique ontologies so that it can be passed directly to the graph 
+		// when filter is applied. Setting the data in advance will allow us to use it directly when needed  
+		// instead of processing it whenever filter is changed
 		const filteredMap = ontologyList.reduce(
 			(curMap, ontology) => ({
 				...curMap,
@@ -50,6 +55,7 @@ const RootContainer = ({ serviceUrl, entity }) => {
 			{}
 		);
 		setOntologyData(filteredMap);
+		// set default selected ontology to the first ontology mentioned in the list
 		changeOntology(ontologyList.length && ontologyList[0]);
 	}, [ontologyList]);
 
