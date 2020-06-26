@@ -8,7 +8,7 @@ const FilterPanel = ({ updateFilters, selectedOntology, ontologyList }) => {
 			<div className="filter-panel">
 				<div className="filter-container">
 					<div className="node-filter">
-						<div>All Nodes</div>
+						<div>All Nodes:</div>
 						<div>
 							<label className="switch">
 								<input type="checkbox" />
@@ -16,7 +16,7 @@ const FilterPanel = ({ updateFilters, selectedOntology, ontologyList }) => {
 							</label>
 						</div>
 					</div>
-					<div className="ontology-filter">Available Ontologies</div>
+					<div className="ontology-filter">Available Ontologies:</div>
 					{ontologyList.map(term => (
 						<React.Fragment key={term}>
 							<input

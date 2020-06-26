@@ -38,6 +38,7 @@ function getGraphData(data) {
 					data: {
 						id: e.ontologyTerm.identifier,
 						bg: color,
+						label: '',
 						shape: 'ellipse',
 						info: {
 							class: e.class,
