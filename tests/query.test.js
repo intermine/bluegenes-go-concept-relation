@@ -1,5 +1,5 @@
 import imjs from 'imjs';
-import { queryData } from './src/query';
+import { queryData } from '../src/query';
 
 describe('query', () => {
 	const mockData = {
