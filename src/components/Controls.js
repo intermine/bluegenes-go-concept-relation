@@ -1,6 +1,12 @@
 import React from 'react';
 
-const FilterPanel = ({ updateFilters, selectedOntology, ontologyList }) => {
+const FilterPanel = ({
+	updateFilters,
+	selectedOntology,
+	ontologyList,
+	updateToggle,
+	toggleStatus
+}) => {
 	return (
 		<div className="filter-panel-root">
 			<h4 className="filter-panel-title">Filter Panel</h4>
@@ -8,10 +14,15 @@ const FilterPanel = ({ updateFilters, selectedOntology, ontologyList }) => {
 			<div className="filter-panel">
 				<div className="filter-container">
 					<div className="node-filter">
-						<div>All Nodes:</div>
+						<div>Shared Nodes:</div>
 						<div>
 							<label className="switch">
-								<input type="checkbox" />
+								<input
+									type="checkbox"
+									value={toggleStatus}
+									onChange={updateToggle}
+									checked={toggleStatus}
+								/>
 								<span className="slider round"></span>
 							</label>
 						</div>

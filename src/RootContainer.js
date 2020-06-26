@@ -11,6 +11,7 @@ const RootContainer = ({ serviceUrl, entity }) => {
 	const [selectedOntologyData, setOntologyData] = useState({});
 	const [sharedNodeData, setSharedNodeData] = useState({});
 	const [loading, setLoading] = useState(true);
+	const [toggleStatus, setToggleStatus] = useState(true);
 
 	useEffect(() => {
 		setLoading(true);
@@ -118,7 +119,11 @@ const RootContainer = ({ serviceUrl, entity }) => {
 					<div className="graph">
 						<span className="chart-title">Go Concept Relation</span>
 						<GeneOntologyNetwork
-							data={selectedOntologyData[selectedOntology]}
+							data={
+								toggleStatus
+									? sharedNodeData[selectedOntology]
+									: selectedOntologyData[selectedOntology]
+							}
 						/>
 					</div>
 					{ontologyList.length ? (
@@ -127,6 +132,8 @@ const RootContainer = ({ serviceUrl, entity }) => {
 								updateFilters={ev => changeOntology(ev.target.value)}
 								selectedOntology={selectedOntology}
 								ontologyList={ontologyList}
+								updateToggle={() => setToggleStatus(!toggleStatus)}
+								toggleStatus={toggleStatus}
 							/>
 						</div>
 					) : (
