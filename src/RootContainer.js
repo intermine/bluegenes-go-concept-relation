@@ -49,9 +49,10 @@ const RootContainer = ({ serviceUrl, entity }) => {
 				...curMap,
 				[ontology]: data.map(item => ({
 					...item,
-					goAnnotation: item.goAnnotation.filter(
-						g => g.ontologyTerm.namespace === ontology
-					)
+					goAnnotation:
+						item &&
+						item.goAnnotation &&
+						item.goAnnotation.filter(g => g.ontologyTerm.namespace === ontology)
 				}))
 			}),
 			{}
@@ -93,11 +94,14 @@ const RootContainer = ({ serviceUrl, entity }) => {
 				if (freq > 1) {
 					const filteredMap = geneArr.map(item => ({
 						...item,
-						goAnnotation: item.goAnnotation.filter(
-							g =>
-								g.ontologyTerm.identifier === key &&
-								g.ontologyTerm.namespace === ontology
-						)
+						goAnnotation:
+							item &&
+							item.goAnnotation &&
+							item.goAnnotation.filter(
+								g =>
+									g.ontologyTerm.identifier === key &&
+									g.ontologyTerm.namespace === ontology
+							)
 					}));
 					filteredMap.forEach(item => {
 						if (!map[item.symbol]) map[item.symbol] = item;

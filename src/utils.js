@@ -31,7 +31,8 @@ function getGraphData(data) {
 				}
 			}
 		});
-		el.goAnnotation &&
+		el &&
+			el.goAnnotation &&
 			el.goAnnotation.forEach(e => {
 				const { description, name, namespace } = e.ontologyTerm;
 				elements.push({
