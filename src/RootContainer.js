@@ -72,7 +72,7 @@ const RootContainer = ({ serviceUrl, entity }) => {
 			data.forEach(geneData => {
 				geneData &&
 					geneData.goAnnotation &&
-					geneData.goAnnotation.filter(item => {
+					geneData.goAnnotation.forEach(item => {
 						let count = counts.get(item.ontologyTerm.identifier);
 						if (typeof count !== 'undefined') {
 							var freq = count[0];
@@ -82,7 +82,6 @@ const RootContainer = ({ serviceUrl, entity }) => {
 							item.ontologyTerm.identifier,
 							count ? [freq + 1, [...gene, geneData]] : [1, [geneData]]
 						);
-						return count === 1;
 					});
 			});
 			const map = {};
