@@ -20,10 +20,12 @@ const RootContainer = ({ serviceUrl, entity }) => {
 			serviceUrl: serviceUrl,
 			// supporting single entity also by converting value into array and passing it to get queried
 			geneId: !Array.isArray(value) ? [value] : value
-		}).then(data => {
-			setData(data);
-			setLoading(false);
-		});
+		})
+			.then(data => {
+				setData(data);
+				setLoading(false);
+			})
+			.catch(() => setLoading(false));
 	}, []);
 
 	useEffect(() => {
