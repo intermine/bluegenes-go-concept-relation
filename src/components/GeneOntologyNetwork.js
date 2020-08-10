@@ -5,7 +5,6 @@ import {
 	createTooltip,
 	createTooltipData,
 	getGraphData,
-	changeNodeColor,
 	createCytoscapeConfig
 } from '../utils';
 
@@ -22,10 +21,9 @@ function GeneOntologyNetwork({ data }) {
 			div = createTooltip(event.renderedPosition, createTooltipData(event));
 		});
 		node.unbind('mouseout');
-		node.bind('mouseout', event => {
+		node.bind('mouseout', () => {
 			document.body.style.cursor = 'default';
 			div.style.display = 'none';
-			changeNodeColor(event);
 		});
 	}, [data]);
 	return <div id="cy" className="cyContainer"></div>;

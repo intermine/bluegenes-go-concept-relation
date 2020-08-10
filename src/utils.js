@@ -1,17 +1,27 @@
-const geneColor = '#808080';
-const hoveredGeneColor = '#666666';
-const goTermColor = '#F4D03F';
-const hoveredGoTermColor = '#EDBE05';
+import colors from './constant';
 
 function getGraphData(data) {
 	const elements = [];
+	const colorArrLen = colors.length;
+	// setting color of each gene node taking hex code color from constant file
+	for (var i = 0; i < data.length; i++) {
+		data[i].color = colors[i % colorArrLen];
+	}
 	data.forEach(el => {
-		const { symbol, secondaryIdentifier, primaryIdentifier, organism } = el;
+		const {
+			symbol,
+			secondaryIdentifier,
+			primaryIdentifier,
+			organism,
+			color
+		} = el;
 		elements.push({
 			group: 'nodes',
 			data: {
 				id: el.symbol,
-				bg: geneColor,
+				bg: color,
+				label: el.symbol,
+				shape: 'barrel',
 				info: {
 					class: el.class,
 					symbol,
@@ -21,14 +31,17 @@ function getGraphData(data) {
 				}
 			}
 		});
-		el.goAnnotation &&
+		el &&
+			el.goAnnotation &&
 			el.goAnnotation.forEach(e => {
 				const { description, name, namespace } = e.ontologyTerm;
 				elements.push({
 					group: 'nodes',
 					data: {
 						id: e.ontologyTerm.identifier,
-						bg: goTermColor,
+						bg: color,
+						label: '',
+						shape: 'ellipse',
 						info: {
 							class: e.class,
 							name,
@@ -49,17 +62,45 @@ function getGraphData(data) {
 	return elements;
 }
 
+function makePie(elements) {
+	// creating array containting the colors each pie node needed
+	const idToColorsMap = elements.reduce((m, elem) => {
+		if (elem.data && elem.data.id) {
+			if (!m[elem.data.id]) m[elem.data.id] = [];
+			m[elem.data.id].push(elem.data.bg);
+		}
+		return m;
+	}, {});
+	// returning object containing all pie nodes with thier styles
+	return Object.keys(idToColorsMap)
+		.filter(key => idToColorsMap[key].length > 1)
+		.map(id => {
+			const pieNodeStyle = {};
+			pieNodeStyle['selector'] = `node[id = '${id}']`;
+			const style = {};
+			const colorLen = idToColorsMap[id].length;
+			for (let i = 1; i <= colorLen; i++) {
+				style[`pie-${i}-background-color`] = idToColorsMap[id][i - 1];
+				style[`pie-${i}-background-size`] = 100 / colorLen;
+			}
+			pieNodeStyle['style'] = style;
+			return pieNodeStyle;
+		});
+}
+
 function createCytoscapeConfig(elements) {
 	return {
 		container: document.getElementById('cy'),
 		elements: elements,
 		grabbable: true,
 		style: [
+			...makePie(elements),
 			{
 				selector: 'node',
 				style: {
-					label: 'data(id)',
-					'background-color': 'data(bg)'
+					label: 'data(label)',
+					'background-color': 'data(bg)',
+					shape: 'data(shape)'
 				}
 			},
 			{
@@ -105,7 +146,6 @@ function createTooltipData(node) {
 	} = node.target[0]._private;
 
 	if (info.class === 'Gene') {
-		node.target.style('backgroundColor', hoveredGeneColor);
 		return `
 			<div>
 				<span>Symbol: </span><strong>${info.symbol}</strong><br/><div style="padding: 2px"></div>
@@ -116,7 +156,6 @@ function createTooltipData(node) {
 		`;
 	}
 	if (info.class === 'GOAnnotation') {
-		node.target.style('backgroundColor', hoveredGoTermColor);
 		return `
 			<div>
 				<span>Symbol: </span><strong>${node.target[0]._private.data.id}</strong><br/><div style="padding: 4px"></div>
@@ -128,19 +167,9 @@ function createTooltipData(node) {
 	}
 }
 
-function changeNodeColor(node) {
-	const {
-		data: { info }
-	} = node.target[0]._private;
-	if (info.class === 'Gene') node.target.style('backgroundColor', geneColor);
-	if (info.class === 'GOAnnotation')
-		node.target.style('backgroundColor', goTermColor);
-}
-
 export {
 	createTooltip,
 	createTooltipData,
 	getGraphData,
-	changeNodeColor,
 	createCytoscapeConfig
 };
