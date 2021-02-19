@@ -88,9 +88,9 @@ function makePie(elements) {
 		});
 }
 
-function createCytoscapeConfig(elements) {
+function createCytoscapeConfig(elements, cytoscapeElement) {
 	return {
-		container: document.getElementById('cy'),
+		container: cytoscapeElement.current,
 		elements: elements,
 		grabbable: true,
 		style: [
@@ -120,13 +120,16 @@ function createCytoscapeConfig(elements) {
 	};
 }
 
-function createTooltip(position, content) {
+function createTooltip(containerEl, position, content) {
 	const div = document.createElement('div');
-	const rootElem = document.getElementsByClassName('rootContainer')[0];
+	const rootElem = containerEl.current;
 	if (rootElem.offsetWidth - position.x > 300) position.x += 50;
 	else position.x -= 350;
+	const { top, left } = rootElem.getBoundingClientRect();
+	position.y += top;
+	position.x += left;
 	div.style.background = 'gray';
-	div.style.position = 'absolute';
+	div.style.position = 'fixed';
 	div.style.color = 'white';
 	div.innerHTML = content;
 	div.style.top = position.y + 'px';
@@ -136,7 +139,6 @@ function createTooltip(position, content) {
 	div.style.width = '310px';
 	div.style.border = '1px solid black';
 	div.style.borderRadius = '8px';
-	document.body.append(div);
 	return div;
 }
 

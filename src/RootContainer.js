@@ -122,7 +122,6 @@ const RootContainer = ({ serviceUrl, entity }) => {
 			) : Object.keys(selectedOntologyData).length ? (
 				<div className="innerContainer">
 					<div className="graph">
-						<span className="chart-title">Go Concept Relation</span>
 						<GeneOntologyNetwork
 							data={
 								toggleStatus
@@ -146,7 +145,7 @@ const RootContainer = ({ serviceUrl, entity }) => {
 					)}
 				</div>
 			) : (
-				<h1>No Data Found</h1>
+				<h4 className="no-data">No data found</h4>
 			)}
 		</div>
 	);

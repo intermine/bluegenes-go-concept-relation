@@ -1,6 +1,6 @@
-#  GO terms Concept Viewer
+#  GO Concept Relation
 
-GO terms Concept Viewer is a tool made for [BlueGenes](http://bluegenes.apps.intermine.org) following BlueGenes Tool API.
+GO Concept Relation is a tool made for [BlueGenes](http://bluegenes.apps.intermine.org) following BlueGenes Tool API.
 Add more description of your tool here! :)
 
 ## Licence

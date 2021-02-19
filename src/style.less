@@ -8,11 +8,11 @@
   // to build your css, run `lessc src/style.css dist/style.css --clean-css`
   // in your terminal
 
-
-  // this is just an example class for root div element, you may modify or delete it as per your usecase
  	.rootContainer {
-		border: 1px solid black;
-		padding: 20px;
+        .no-data {
+            margin-left: 15px;
+        }
+
 		.loading-container {
 			display: flex;
 			align-content: space-around;
@@ -57,24 +57,16 @@
 		display: flex;
 		
 			.controls {
-			width: 15rem;
+                width: 300px;
+                position: absolute;
+                right: 0;
 
 				.filter-panel-root {
 					padding: 10px 0px;
 					border: 0.5px solid black;
 					border-radius: 10px;
 					background: #F9F9F9;
-					margin-bottom: 26px;
 			
-					h4.filter-panel-title {
-						font-size: 22px;
-						font-family: sans-serif;
-						text-align: center;
-						margin: 0;
-						margin-bottom: 10px;
-						font-weight: 300;
-					}
-				
 					.filter-panel {
 						.filter-container {
 							padding: 0 8px;
@@ -85,7 +77,7 @@
 								height: 35px;
 								line-height: 35px;
 								font-weight: 300;
-								font-size: 18px;
+								font-size: 16px;
 								font-family: arial;
 								color: black;
 								text-align: center;
@@ -150,7 +142,7 @@
 							  }
 							}
 							.ontology-filter {
-								font-weight: 300;
+								font-weight: 400;
 								font-size: 18px;
 								font-family: arial;
 								color: black;
@@ -167,7 +159,7 @@
 							label {
 								font-weight: 200;
 								margin: 6px 0;
-								font-size: 18px;
+								font-size: 16px;
 								font-family: arial;
 								color: black;
 								text-align: center;
@@ -179,20 +171,29 @@
 			}
 
 			.graph {
-				width: calc(100vw - 15rem);
+				width: 100%;
+                min-height: 300px;
 
-				.chart-title {
-					font-weight: 300;
-					font-size: 24px;
-					font-family: sans-serif;
-					display: flex;
-					justify-content: center;
-					margin: 12px;
-				}
-					
+                .confirmation-dialog {
+                    z-index: 1;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background-color: #F9F9F9;
+                    padding: 20px;
+                    border: 0.5px solid black;
+                    border-radius: 10px;
+
+                    .confirm-button {
+                        background: rgb(72, 116, 235);
+                        color: white;
+                    }
+                }
+
 				.cyContainer {
 					position: relative !important;
-					height: 42rem !important;
+					height: 600px !important;
 				}
 			}
 		}
