@@ -13,6 +13,7 @@
 		"css": "dist/style.css",
 		"js": "dist/bundle.js"
 	},
+  "threshold": 100,
 	"toolName": {
 		"human": "GO Concept Relation",
 		"cljs": "BlueGenesGoConceptRelation"
