@@ -9,7 +9,7 @@
 			"id": "primaryAccession"
 		}
 	},
-	"description" : "Square nodes represent genes from your list.  Circular nodes represent GO term annotations for the genes\\nin your list.  Edges connect Genes and GO terms.  By default, only relationships where a gene is connected\\nto more than one GO term are shown. To show all Gene-GO term relationships for the genes in your list, toggle\\nthe “Shared nodes” slider.  GO term nodes are coloured according to the shared set of genes.  The network\\ncan be filtered according to specific Gene Ontology - molecular function, biological function or cellular component.",
+	"description" : "Square nodes represent genes from your list.  Circular nodes represent GO term annotations for the genes in your list.  Edges connect Genes and GO terms.  By default, only relationships where a gene is connected to more than one GO term are shown. To show all Gene-GO term relationships for the genes in your list, toggle the “Shared nodes” slider.  GO term nodes are coloured according to the shared set of genes.  The network can be filtered according to specific Gene Ontology - molecular function, biological function or cellular component.",
 	"files": {
 		"css": "dist/style.css",
 		"js": "dist/bundle.js"
